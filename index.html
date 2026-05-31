@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Depot Anda Mojokerto - Cita Rasa Legendaris. Sop Buntut Spesial & Nasi Rames Empal sejak dekade lamanya.">
+    <title>Depot Anda Mojokerto — Cita Rasa Legendaris</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================
+           CSS CUSTOM PROPERTIES - DESIGN TOKENS
+        ============================================ */
+        :root {
+            --color-deep-brown: #2C1810;
+            --color-warm-brown: #5C3D2E;
+            --color-cream: #FAF3E8;
+            --color-cream-dark: #F5E6D0;
+            --color-gold: #D4A853;
+            --color-gold-light: #E8C97A;
+            --color-orange: #C8783A;
+            --color-text-dark: #3D2B1F;
+            --color-text-muted: #8B7355;
+            --color-cream-50: rgba(250, 243, 232, 0.5);
+
+            --space-xs: 8px;
+            --space-sm: 16px;
+            --space-md: 24px;
+            --space-lg: 48px;
+            --space-xl: 80px;
+            --space-2xl: 120px;
+            --max-width: 1200px;
+            --radius-sm: 12px;
+            --radius-md: 20px;
+            --radius-lg: 24px;
+
+            --shadow-sm: 0 2px 8px rgba(44, 24, 16, 0.08);
+            --shadow-md: 0 8px 32px rgba(44, 24, 16, 0.12);
+            --shadow-lg: 0 16px 48px rgba(44, 24, 16, 0.18);
+            --shadow-gold: 0 8px 32px rgba(212, 168, 83, 0.25);
+            --shadow-gold-lg: 0 12px 40px rgba(212, 168, 83, 0.35);
+        }
+
+        /* ============================================
+           RESET & BASE
+        ============================================ */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            line-height: 1.7;
+            color: var(--color-text-dark);
+            background-color: var(--color-cream);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        /* ============================================
+           UTILITY CLASSES
+        ============================================ */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+                        transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.15s; }
+        .reveal-delay-2 { transition-delay: 0.30s; }
+        .reveal-delay-3 { transition-delay: 0.45s; }
+
+        /* ============================================
+           NAVIGATION
+        ============================================ */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 var(--space-lg);
+            max-width: 100%;
+            transition: background 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                        box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                        backdrop-filter 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav.scrolled {
+            background: rgba(44, 24, 16, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--color-cream);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-brand svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: var(--space-lg);
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--color-cream);
+            letter-spacing: 0.02em;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--color-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-gold);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            padding: 4px;
+            z-index: 1001;
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--color-cream);
+            transition: all 0.3s ease;
+        }
+
+        .nav-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .nav-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .nav-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* Mobile Nav Overlay */
+        .nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(44, 24, 16, 0.98);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        .nav-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .nav-overlay a {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--color-cream);
+            transition: color 0.3s ease;
+        }
+
+        .nav-overlay a:hover {
+            color: var(--color-gold);
+        }
+
+        /* ============================================
+           HERO SECTION
+        ============================================ */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: var(--color-deep-brown);
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('images/hero-background.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            animation: heroBgFade 1.2s ease-out forwards;
+        }
+
+        @keyframes heroBgFade {
+            to { opacity: 1; }
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(44,24,16,0.75) 0%, rgba(44,24,16,0.60) 50%, rgba(44,24,16,0.85) 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 800px;
+            padding: 0 var(--space-lg);
+            padding-top: 80px;
+        }
+
+        .hero-decor {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: var(--space-lg);
+            opacity: 0;
+            animation: heroFadeUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
+        }
+
+        .hero-decor-line {
+            width: 80px;
+            height: 1px;
+            background: var(--color-gold);
+        }
+
+        .hero-decor-diamond {
+            width: 6px;
+            height: 6px;
+            background: var(--color-gold);
+            transform: rotate(45deg);
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 72px;
+            font-weight: 700;
+            color: var(--color-cream);
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            animation: heroFadeUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+        }
+
+        .hero-subtitle {
+            font-family: 'Inter', sans-serif;
+            font-size: 20px;
+            font-weight: 400;
+            color: rgba(250, 243, 232, 0.85);
+            max-width: 600px;
+            margin: var(--space-md) auto 0;
+            line-height: 1.7;
+            opacity: 0;
+            animation: heroFadeUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 40px;
+            padding: 18px 40px;
+            background: var(--color-gold);
+            color: var(--color-deep-brown);
+            font-family: 'Inter', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-gold);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            animation: heroFadeUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.7s forwards;
+        }
+
+        .hero-cta svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .hero-cta:hover {
+            background: var(--color-gold-light);
+            box-shadow: var(--shadow-gold-lg);
+            transform: translateY(-2px);
+        }
+
+        .hero-cta:active {
+            transform: translateY(0);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .hero-cta:focus-visible {
+            outline: 2px solid var(--color-gold-light);
+            outline-offset: 4px;
+        }
+
+        @keyframes heroFadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            opacity: 0;
+            animation: heroFadeUp 0.6s ease-out 1.2s forwards;
+        }
+
+        .scroll-indicator-line {
+            width: 1px;
+            height: 32px;
+            background: rgba(250, 243, 232, 0.5);
+        }
+
+        .scroll-indicator-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(250, 243, 232, 0.5);
+            animation: scrollBounce 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes scrollBounce {
+            from { transform: translateY(-12px); }
+            to { transform: translateY(0); }
+        }
+
+        /* ============================================
+           SECTION DIVIDER
+        ============================================ */
+        .section-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            max-width: 200px;
+            margin: 0 auto;
+            padding: var(--space-xl) 0;
+        }
+
+        .section-divider-line {
+            flex: 1;
+            height: 1px;
+            background: rgba(212, 168, 83, 0.3);
+        }
+
+        .section-divider-diamond {
+            width: 6px;
+            height: 6px;
+            background: var(--color-gold);
+            transform: rotate(45deg);
+            animation: diamondSpin 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            opacity: 0;
+        }
+
+        .section-divider.revealed .section-divider-diamond {
+            opacity: 1;
+        }
+
+        @keyframes diamondSpin {
+            from {
+                opacity: 0;
+                transform: rotate(0deg);
+            }
+            to {
+                opacity: 1;
+                transform: rotate(45deg);
+            }
+        }
+
+        /* ============================================
+           MENU GRID SECTION
+        ============================================ */
+        .menu-section {
+            background: var(--color-cream);
+            padding: var(--space-2xl) var(--space-lg);
+        }
+
+        .menu-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .menu-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-md);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-gold);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        .menu-label-line {
+            width: 40px;
+            height: 1px;
+            background: var(--color-gold);
+        }
+
+        .menu-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 600;
+            color: var(--color-deep-brown);
+            margin-top: var(--space-md);
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+        }
+
+        .menu-header p {
+            font-family: 'Inter', sans-serif;
+            font-size: 18px;
+            color: var(--color-text-muted);
+            max-width: 500px;
+            margin: var(--space-md) auto 0;
+            line-height: 1.7;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        /* Menu Card */
+        .menu-card {
+            background: var(--color-cream-dark);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .menu-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .menu-card-image {
+            position: relative;
+            aspect-ratio: 4 / 3;
+            overflow: hidden;
+        }
+
+        .menu-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .menu-card:hover .menu-card-image img {
+            transform: scale(1.05);
+        }
+
+        .menu-card-image::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40%;
+            background: linear-gradient(transparent, rgba(44, 24, 16, 0.3));
+            pointer-events: none;
+        }
+
+        .menu-card-content {
+            padding: var(--space-md) 28px 32px;
+        }
+
+        .menu-card-tag {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--color-gold);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: var(--space-xs);
+        }
+
+        .menu-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--color-deep-brown);
+            line-height: 1.3;
+            margin-bottom: 8px;
+        }
+
+        .menu-card p {
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            color: var(--color-text-muted);
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        /* ============================================
+           DELIVERY & CATERING SECTION
+        ============================================ */
+        .catering-section {
+            background: var(--color-deep-brown);
+            padding: var(--space-2xl) var(--space-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .catering-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L55 30 L30 55 L5 30 Z' fill='none' stroke='%23D4A853' stroke-width='0.5' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        .catering-content {
+            position: relative;
+            z-index: 1;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            display: flex;
+            gap: 64px;
+            align-items: center;
+        }
+
+        .catering-left {
+            flex: 1;
+        }
+
+        .catering-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-gold);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        .catering-left h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 600;
+            color: var(--color-cream);
+            margin-top: var(--space-md);
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+        }
+
+        .catering-left p {
+            font-family: 'Inter', sans-serif;
+            font-size: 18px;
+            color: rgba(250, 243, 232, 0.8);
+            margin-top: 20px;
+            max-width: 480px;
+            line-height: 1.7;
+        }
+
+        .catering-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 32px;
+            padding: 14px 32px;
+            background: transparent;
+            border: 2px solid var(--color-gold);
+            color: var(--color-gold);
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: var(--radius-md);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .catering-cta:hover {
+            background: var(--color-gold);
+            color: var(--color-deep-brown);
+            transform: translateY(-2px);
+        }
+
+        .catering-cta:focus-visible {
+            outline: 2px solid var(--color-gold-light);
+            outline-offset: 4px;
+        }
+
+        .catering-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Info Card */
+        .info-card {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-md);
+            background: rgba(250, 243, 232, 0.08);
+            border: 1px solid rgba(212, 168, 83, 0.2);
+            border-radius: var(--radius-md);
+            padding: var(--space-md) 28px;
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover {
+            background: rgba(250, 243, 232, 0.12);
+            border-color: rgba(212, 168, 83, 0.35);
+        }
+
+        .info-card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(212, 168, 83, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .info-card-icon svg {
+            width: 24px;
+            height: 24px;
+            color: var(--color-gold);
+        }
+
+        .info-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--color-cream);
+            margin-bottom: 4px;
+        }
+
+        .info-card p {
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            color: rgba(250, 243, 232, 0.6);
+            line-height: 1.6;
+        }
+
+        /* ============================================
+           LOCATION & HOURS SECTION
+        ============================================ */
+        .location-section {
+            background: var(--color-cream);
+            padding: var(--space-2xl) var(--space-lg);
+        }
+
+        .location-content {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .location-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-md);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-gold);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        .location-label-line {
+            width: 40px;
+            height: 1px;
+            background: var(--color-gold);
+        }
+
+        .location-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 600;
+            color: var(--color-deep-brown);
+            margin-top: var(--space-md);
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+        }
+
+        /* Hours Card */
+        .hours-card {
+            background: var(--color-cream-dark);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: 40px 48px;
+            max-width: 480px;
+            margin: 40px auto 0;
+            display: inline-block;
+        }
+
+        .hours-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto var(--space-md);
+            color: var(--color-gold);
+        }
+
+        .hours-time {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--color-deep-brown);
+            line-height: 1.1;
+        }
+
+        .hours-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            color: var(--color-text-muted);
+            margin-top: 8px;
+        }
+
+        /* Address */
+        .location-address {
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .location-address svg {
+            width: 24px;
+            height: 24px;
+            color: var(--color-gold);
+        }
+
+        .location-address p {
+            font-family: 'Inter', sans-serif;
+            font-size: 18px;
+            color: var(--color-text-dark);
+            max-width: 500px;
+            line-height: 1.7;
+        }
+
+        .location-address .address-note {
+            font-size: 14px;
+            color: var(--color-text-muted);
+            font-style: italic;
+        }
+
+        /* Map Placeholder */
+        .map-placeholder {
+            max-width: 800px;
+            height: 300px;
+            margin: 48px auto 0;
+            background: var(--color-cream-dark);
+            border: 2px dashed rgba(212, 168, 83, 0.3);
+            border-radius: var(--radius-lg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .map-placeholder svg {
+            width: 40px;
+            height: 40px;
+            color: var(--color-text-muted);
+        }
+
+        .map-placeholder span {
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            color: var(--color-text-muted);
+        }
+
+        /* ============================================
+           FOOTER
+        ============================================ */
+        .footer {
+            background: var(--color-deep-brown);
+            padding: 48px var(--space-lg);
+            text-align: center;
+        }
+
+        .footer-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--color-gold);
+            margin-bottom: 8px;
+        }
+
+        .footer-address {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            color: rgba(250, 243, 232, 0.7);
+            line-height: 1.6;
+        }
+
+        .footer-copy {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            color: var(--color-text-muted);
+            margin-top: 24px;
+        }
+
+        /* ============================================
+           FLOATING WHATSAPP BUTTON
+        ============================================ */
+        .fab-wa {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: var(--color-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-gold);
+            z-index: 100;
+            transform: scale(0);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                        box-shadow 0.3s ease;
+        }
+
+        .fab-wa.visible {
+            transform: scale(1);
+        }
+
+        .fab-wa:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-gold-lg);
+        }
+
+        .fab-wa svg {
+            width: 28px;
+            height: 28px;
+            color: var(--color-cream);
+        }
+
+        /* ============================================
+           RESPONSIVE - TABLET (768px - 1023px)
+        ============================================ */
+        @media (max-width: 1023px) {
+            .hero h1 {
+                font-size: 56px;
+            }
+
+            .menu-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 24px;
+            }
+
+            .menu-header h2,
+            .catering-left h2,
+            .location-content h2 {
+                font-size: 40px;
+            }
+
+            .catering-content {
+                gap: 48px;
+            }
+
+            .hours-time {
+                font-size: 40px;
+            }
+        }
+
+        /* ============================================
+           RESPONSIVE - MOBILE (< 768px)
+        ============================================ */
+        @media (max-width: 767px) {
+            .nav {
+                height: 64px;
+                padding: 0 var(--space-md);
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .nav-toggle {
+                display: flex;
+            }
+
+            .hero {
+                min-height: 100svh;
+            }
+
+            .hero h1 {
+                font-size: 42px;
+            }
+
+            .hero-subtitle {
+                font-size: 17px;
+            }
+
+            .hero-cta {
+                width: calc(100% - 40px);
+                max-width: 360px;
+                justify-content: center;
+                padding: 16px 24px;
+                font-size: 16px;
+            }
+
+            .menu-section,
+            .catering-section,
+            .location-section {
+                padding: 80px var(--space-md);
+            }
+
+            .menu-header {
+                margin-bottom: 48px;
+            }
+
+            .menu-header h2,
+            .catering-left h2,
+            .location-content h2 {
+                font-size: 32px;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .menu-card-image {
+                aspect-ratio: 16 / 9;
+            }
+
+            .catering-content {
+                flex-direction: column;
+                gap: 48px;
+            }
+
+            .catering-left {
+                text-align: center;
+            }
+
+            .catering-left p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hours-card {
+                padding: 32px 24px;
+            }
+
+            .hours-time {
+                font-size: 36px;
+            }
+
+            .map-placeholder {
+                height: 200px;
+            }
+
+            .fab-wa {
+                bottom: 16px;
+                right: 16px;
+            }
+
+            .footer {
+                padding: 32px var(--space-md);
+            }
+        }
+
+        /* ============================================
+           ACCESSIBILITY - REDUCED MOTION
+        ============================================ */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            html {
+                scroll-behavior: auto;
+            }
+
+            .hero-bg,
+            .hero-decor,
+            .hero h1,
+            .hero-subtitle,
+            .hero-cta,
+            .scroll-indicator {
+                opacity: 1;
+                animation: none;
+            }
+
+            .reveal {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        /* ============================================
+           FOCUS VISIBLE (keyboard navigation)
+        ============================================ */
+        a:focus-visible,
+        button:focus-visible {
+            outline: 2px solid var(--color-gold);
+            outline-offset: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================
+         NAVIGATION
+    ============================================ -->
+    <nav class="nav" id="nav">
+        <a href="#" class="nav-brand">
+            <!-- Gold leaf icon -->
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M12 2L15 9L22 9.5L17 14.5L18.5 22L12 18.5L5.5 22L7 14.5L2 9.5L9 9L12 2Z" fill="#D4A853"/>
+            </svg>
+            Depot Anda
+        </a>
+        <ul class="nav-links">
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#katering">Katering</a></li>
+            <li><a href="#lokasi">Lokasi</a></li>
+        </ul>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <!-- Mobile Nav Overlay -->
+    <div class="nav-overlay" id="navOverlay">
+        <a href="#menu" class="nav-overlay-link">Menu</a>
+        <a href="#katering" class="nav-overlay-link">Katering</a>
+        <a href="#lokasi" class="nav-overlay-link">Lokasi</a>
+    </div>
+
+    <!-- ============================================
+         HERO SECTION
+    ============================================ -->
+    <section class="hero" id="beranda">
+        <div class="hero-bg" role="img" aria-label="Hidangan tradisional Indonesia di meja kayu"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-decor">
+                <div class="hero-decor-line"></div>
+                <div class="hero-decor-diamond"></div>
+                <div class="hero-decor-line"></div>
+            </div>
+            <h1>Cita Rasa Legendaris Depot Anda</h1>
+            <p class="hero-subtitle">Sop Buntut &amp; Nasi Rames Empal — Kenikmatan Otentik sejak Dekade Lamanya</p>
+            <a href="https://wa.me/628123456789?text=Halo%20Depot%20Anda,%20saya%20mau%20pesan%20Sop%20Buntut%20dan%20Nasi%20Rames%20dong!" class="hero-cta" target="_blank" rel="noopener noreferrer">
+                <!-- WhatsApp icon -->
+                <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+                Pesan Delivery via WhatsApp
+            </a>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-indicator-line"></div>
+            <div class="scroll-indicator-dot"></div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SIGNATURE MENU GRID SECTION
+    ============================================ -->
+    <section class="menu-section" id="menu">
+        <div class="menu-header">
+            <div class="menu-label reveal">
+                <span class="menu-label-line"></span>
+                Menu Legendaris
+                <span class="menu-label-line"></span>
+            </div>
+            <h2 class="reveal">Ragam Cita Rasa Nusantara</h2>
+            <p class="reveal">Setiap hidangan dibuat dengan resep turun-temurun dan bahan-bahan pilihan terbaik</p>
+        </div>
+        <div class="menu-grid">
+            <!-- Card 1: Sop Buntut -->
+            <article class="menu-card reveal reveal-delay-1">
+                <div class="menu-card-image">
+                    <img src="images/menu-sop-buntut.jpg" alt="Sop Buntut Spesial dalam mangkuk keramik tradisional dengan kuah kaldu bening dan daging empuk" loading="lazy">
+                </div>
+                <div class="menu-card-content">
+                    <span class="menu-card-tag">Best Seller</span>
+                    <h3>Sop Buntut Spesial</h3>
+                    <p>Daging lembut, kuah rempah kaya rasa</p>
+                </div>
+            </article>
+            <!-- Card 2: Nasi Rames Empal -->
+            <article class="menu-card reveal reveal-delay-2">
+                <div class="menu-card-image">
+                    <img src="images/menu-nasi-ramas-empal.jpg" alt="Nasi Rames Empal dengan nasi putih, empal goreng, sayur, dan sambal di piring kayu" loading="lazy">
+                </div>
+                <div class="menu-card-content">
+                    <span class="menu-card-tag">Favorit</span>
+                    <h3>Nasi Rames Empal</h3>
+                    <p>Empal empuk gurih bumbu meresap</p>
+                </div>
+            </article>
+            <!-- Card 3: Rawon Daging -->
+            <article class="menu-card reveal reveal-delay-3">
+                <div class="menu-card-image">
+                    <img src="images/menu-rawon-daging.jpg" alt="Rawon Daging dengan kuah hitam pekat kluwek, daging sapi, dan tauge" loading="lazy">
+                </div>
+                <div class="menu-card-content">
+                    <span class="menu-card-tag">Klasik</span>
+                    <h3>Rawon Daging</h3>
+                    <p>Kuah kluwek hitam pekat otentik</p>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- ============================================
+         DELIVERY & CATERING SECTION
+    ============================================ -->
+    <section class="catering-section" id="katering">
+        <div class="catering-pattern"></div>
+        <div class="catering-content">
+            <div class="catering-left">
+                <span class="catering-label reveal">Layanan Kami</span>
+                <h2 class="reveal">Katering &amp; Pengantaran</h2>
+                <p class="reveal">Kami menerima pesanan katering untuk berbagai acara — mulai dari arisan keluarga, rapat kantor, hingga pesanan antar dalam jumlah besar. Setiap hidangan kami siapkan dengan standar kualitas yang sama seperti yang kami sajikan di depot.</p>
+                <a href="https://wa.me/628123456789?text=Halo%20Depot%20Anda,%20saya%20mau%20pesan%20Sop%20Buntut%20dan%20Nasi%20Rames%20dong!" class="catering-cta reveal" target="_blank" rel="noopener noreferrer">
+                    Hubungi Kami
+                </a>
+            </div>
+            <div class="catering-right">
+                <!-- Info Card 1: Family Events -->
+                <div class="info-card reveal reveal-delay-1">
+                    <div class="info-card-icon">
+                        <!-- Users/Family icon -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3>Acara Keluarga</h3>
+                        <p>Katering untuk arisan, ulang tahun, dan pertemuan keluarga</p>
+                    </div>
+                </div>
+                <!-- Info Card 2: Office Events -->
+                <div class="info-card reveal reveal-delay-2">
+                    <div class="info-card-icon">
+                        <!-- Building icon -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M3 21h18"></path>
+                            <path d="M5 21V7l8-4 8 4v14"></path>
+                            <path d="M9 21v-6h6v6"></path>
+                            <path d="M10 9h4"></path>
+                            <path d="M10 13h4"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3>Event Kantor</h3>
+                        <p>Pesan untuk rapat, seminar, dan acara perusahaan</p>
+                    </div>
+                </div>
+                <!-- Info Card 3: Large Orders -->
+                <div class="info-card reveal reveal-delay-3">
+                    <div class="info-card-icon">
+                        <!-- Truck/Delivery icon -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect x="1" y="3" width="15" height="13"></rect>
+                            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                            <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3>Pesanan Jumlah Besar</h3>
+                        <p>Delivery sop buntut dan nasi ramas untuk grup besar</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         LOCATION & HOURS SECTION
+    ============================================ -->
+    <section class="location-section" id="lokasi">
+        <div class="location-content">
+            <div class="location-label reveal">
+                <span class="location-label-line"></span>
+                Kunjungi Kami
+                <span class="location-label-line"></span>
+            </div>
+            <h2 class="reveal">Lokasi &amp; Jam Buka</h2>
+
+            <div class="hours-card reveal">
+                <!-- Clock icon -->
+                <svg class="hours-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <div class="hours-time">06:00 — 21:00</div>
+                <div class="hours-label">Setiap Hari</div>
+            </div>
+
+            <div class="location-address reveal">
+                <!-- Pin icon -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <p>[Alamat Depot Anda Mojokerto — Jl. Contoh No. 123, Mojokerto, Jawa Timur]</p>
+                <span class="address-note">Lokasi strategis di pusat kota Mojokerto</span>
+            </div>
+
+            <div class="map-placeholder reveal">
+                <!-- Map pin icon -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <span>Peta Lokasi</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         FOOTER
+    ============================================ -->
+    <footer class="footer">
+        <div class="footer-name">Depot Anda Mojokerto</div>
+        <p class="footer-address">[Alamat Depot Anda Mojokerto — Jl. Contoh No. 123, Mojokerto, Jawa Timur]</p>
+        <p class="footer-copy">&copy; 2025 Depot Anda Mojokerto. Seluruh hak cipta dilindungi.</p>
+    </footer>
+
+    <!-- ============================================
+         FLOATING WHATSAPP BUTTON
+    ============================================ -->
+    <a href="https://wa.me/628123456789?text=Halo%20Depot%20Anda,%20saya%20mau%20pesan%20Sop%20Buntut%20dan%20Nasi%20Rames%20dong!" class="fab-wa" id="fabWa" target="_blank" rel="noopener noreferrer" aria-label="Pesan via WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+    </a>
+
+    <!-- ============================================
+         JAVASCRIPT
+    ============================================ -->
+    <script>
+        // ============================================
+        // INTERSECTION OBSERVER - Scroll Reveal
+        // ============================================
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // ============================================
+        // NAVIGATION - Scroll Background
+        // ============================================
+        const nav = document.getElementById('nav');
+        let lastScrollY = 0;
+
+        function handleScroll() {
+            const scrollY = window.scrollY;
+
+            // Nav background
+            if (scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+
+            // Floating WhatsApp button
+            const fabWa = document.getElementById('fabWa');
+            const hero = document.querySelector('.hero');
+            const heroBottom = hero.offsetTop + hero.offsetHeight;
+
+            if (scrollY > heroBottom * 0.5) {
+                fabWa.classList.add('visible');
+            } else {
+                fabWa.classList.remove('visible');
+            }
+
+            lastScrollY = scrollY;
+        }
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+
+        // ============================================
+        // MOBILE NAVIGATION TOGGLE
+        // ============================================
+        const navToggle = document.getElementById('navToggle');
+        const navOverlay = document.getElementById('navOverlay');
+        const overlayLinks = document.querySelectorAll('.nav-overlay-link');
+
+        function toggleNav() {
+            navToggle.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            document.body.style.overflow = navOverlay.classList.contains('active') ? 'hidden' : '';
+        }
+
+        navToggle.addEventListener('click', toggleNav);
+
+        overlayLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                toggleNav();
+            });
+        });
+
+        // ============================================
+        // INITIAL SCROLL CHECK (for page refresh)
+        // ============================================
+        handleScroll();
+    </script>
+
+</body>
+</html>
